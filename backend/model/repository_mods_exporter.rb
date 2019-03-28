@@ -90,7 +90,7 @@ class RepositoryMODSSerializer < ASpaceExport::Serializer
     end
 
     mods.subjects.each do |subject|
-      xml.subject(:authority => subject['source']) {
+      xml.subject(:authority => subject['source'], :authority_id => subject['authority_id']) {
         subject['terms'].each do |term|
           case term['type']
           when 'geographic'

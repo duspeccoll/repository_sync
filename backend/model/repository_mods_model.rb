@@ -220,9 +220,12 @@ class RepositoryMODSModel < ASpaceExport::ExportModel
         terms.push term
       end
 
+      authority_id = subject['authority_id'] if subject['authority_id']
+
       self.subjects << {
         'terms' => terms,
-        'source' => subject['source']
+        'source' => subject['source'],
+        'authority_id' => authority_id
       }
     end
   end
