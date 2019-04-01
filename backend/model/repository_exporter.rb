@@ -72,29 +72,27 @@ class RepositorySerializer < ASpaceExport::Serializer
 
   private
 
-  # this is pretty gnarly and I'm not sure I'll keep it, but how we handle dates for now...
   def handle_date(date)
-    date_object = {}
+    date_object = { 'encoding' => "w3cdtf" }
+
     if date.has_key?('certainty')
       date_object['qualifier'] = date['certainty']
     end
 
-    # if expression is provided, use that for this date
+    # has an human-readable expression been provided?
     has_expression = date.has_key?('expression') &&
                   !date['expression'].nil? &&
                   !date['expression'].empty?
 
-    # if end specified, we need a point="end" tag.
-    has_end = date.has_key?('end') &&
-              !date['end'].nil? &&
-              !date['end'].empty? &&
-              !has_expression
-
-    # if beginning specified, we need a point="start" tag.
+    # was a begin date provided?
     has_begin = date.has_key?('begin') &&
                 !date['begin'].nil? &&
-                !date['begin'].empty? &&
-                !has_expression
+                !date['begin'].empty?
+
+    # is the date a range? was an end date provided?
+    has_end = date.has_key?('end') &&
+              !date['end'].nil? &&
+              !date['end'].empty?
 
     # the tag created depends on the type of date
     case date['label']
@@ -106,16 +104,17 @@ class RepositorySerializer < ASpaceExport::Serializer
       date_object['type'] = "other"
     end
 
+    # assign the human-readable expression (to display to users)
     if has_expression
-      date_object['date'] = date['expression']
+      date_object['expression'] = date['expression']
     else
-      date_object['date'] = "#{date['begin']}"
-      date_object['date'] += "-#{date['end']}" if has_end
+      date_object['expression'] = "#{date['begin']}"
+      date_object['expression'] += "-#{date['end']}" if has_end
     end
 
+    # assign the begin and end dates (to be used by elastic for indexing)
     date_object['begin'] = date['begin'] if has_begin
     date_object['end'] = date['end'] if has_end
-    date_object['encoding'] = "w3cdtf"
 
     date_object
   end
