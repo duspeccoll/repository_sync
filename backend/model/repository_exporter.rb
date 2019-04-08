@@ -10,7 +10,7 @@ class RepositorySerializer < ASpaceExport::Serializer
       'identifiers' => [{'type': "local", 'identifier': mods.local_identifier}]
     }
 
-    unless mods.language_term.empty?
+    unless mods.language_term.nil?
       language = mods.language_term.split(":")
       record['language'] = {
         'text' => language[0],
