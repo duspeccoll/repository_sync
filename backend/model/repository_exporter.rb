@@ -12,11 +12,11 @@ class RepositorySerializer < ASpaceExport::Serializer
 
     unless mods.language_term.nil?
       language = mods.language_term.split(":")
-      record['language'] = {
+      record['language'] = [{
         'text' => language[0],
         'code' => language[1],
         'authority' => "iso639-2b"
-      }
+      }]
     end
 
     unless mods.dates.empty?
