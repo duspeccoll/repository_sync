@@ -73,7 +73,11 @@ class RepositorySerializer < ASpaceExport::Serializer
   private
 
   def handle_date(date)
-    date_object = { 'encoding' => "w3cdtf" }
+    date_object = {
+      'encoding' => "w3cdtf",
+      'label' => date['label'],
+      'type' => date['date_type']
+    }
 
     if date.has_key?('certainty')
       date_object['qualifier'] = date['certainty']
@@ -93,16 +97,6 @@ class RepositorySerializer < ASpaceExport::Serializer
     has_end = date.has_key?('end') &&
               !date['end'].nil? &&
               !date['end'].empty?
-
-    # the tag created depends on the type of date
-    case date['label']
-    when 'creation', 'digitized', 'copyright', 'modified', 'issued'
-      date_object['type'] = date['label']
-    when 'broadcast', 'publication'
-      date_object['type'] = "issued"
-    else
-      date_object['type'] = "other"
-    end
 
     # assign the human-readable expression (to display to users)
     if has_expression
