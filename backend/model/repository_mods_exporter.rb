@@ -90,7 +90,7 @@ class RepositoryMODSSerializer < ASpaceExport::Serializer
     end
 
     mods.subjects.each do |subject|
-      xml.subject(:authority => subject['source'], :authority_id => subject['authority_id']) {
+      xml.subject(:authority => subject['source'], :authorityURI => subject['authority_id']) {
         subject['terms'].each do |term|
           case term['type']
           when 'geographic'
@@ -125,8 +125,10 @@ class RepositoryMODSSerializer < ASpaceExport::Serializer
 
     mods.parts.each do |part|
       xml.part(:type => part['type'], :order => part['order']) {
-        xml.title part['name']
-        xml.caption part['caption']
+        xml.detail {
+          xml.title part['name']
+          xml.caption part['caption']
+        }
       }
     end
 
