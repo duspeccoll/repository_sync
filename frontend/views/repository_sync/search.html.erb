@@ -1,0 +1,25 @@
+<%= setup_context :title => "#{@results['title']} (#{@results['id']})", :trail => [[I18n.t("plugins.repository_sync.title"), {:controller => :repository_sync, :action => :index}]] %>
+
+<div class="record-pane">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render_aspace_partial :partial => "shared/flash_messages" %>
+      <h2><%= "#{@results['title']} (#{@results['id']})" %></h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h4>JSON Object</h4>
+      <pre class="pre-scrollable"><code><%= @results['json'] %></code></pre>
+    </div>
+    <div class="col-md-6">
+      <h4>MODS XML Object</h4>
+      <pre class="pre-scrollable"><code><%= @results['mods'] %></code></pre>
+    </div>
+  </div>
+
+  <%= render_aspace_partial :partial => "form" %>
+</div>
+
+<script src="<%= "#{AppConfig[:frontend_prefix]}assets/repository_sync.js" %>"></script>

@@ -1,0 +1,14 @@
+<%= setup_context :title => I18n.t("plugins.repository_sync.title") %>
+
+<div class="record-pane">
+  <div class="row">
+    <div class="col-md-12">
+      <%= render_aspace_partial :partial => "shared/flash_messages" %>
+      <h2><%= I18n.t("plugins.repository_sync.title") %></h2>
+    </div>
+  </div>
+
+  <%= render_aspace_partial :partial => "form" %>
+</div>
+
+<script src="<%= "#{AppConfig[:frontend_prefix]}assets/repository_sync.js" %>"></script>
