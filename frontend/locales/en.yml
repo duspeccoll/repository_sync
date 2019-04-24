@@ -1,4 +1,7 @@
 en:
   plugins:
-    ao_mods:
-      export: Export MODS
+    repository_sync:
+      label: Repository Checker
+      title: Repository Checker
+      actions:
+        search: Search

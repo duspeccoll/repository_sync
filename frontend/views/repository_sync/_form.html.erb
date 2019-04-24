@@ -1,0 +1,19 @@
+<div class="subrecord-form-dummy">
+  <h3>Check Item</h3>
+  <div class="subrecord-form-container">
+    <%= form_tag({:controller => :repository_sync, :action => :search}, {:class => "form-horizontal", :id => "repository_check_form"}) do |f| %>
+      <div class="form-group required">
+        <label class="control-label col-sm-2" for="resource">Item</label>
+        <div class="controls col-sm-8">
+          <%= render_aspace_partial :partial => "item_linker" %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="controls">
+          <%= submit_tag I18n.t("plugins.repository_sync.actions.search"), :class => "btn btn-primary pull-right" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
