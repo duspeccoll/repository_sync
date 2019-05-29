@@ -36,4 +36,17 @@ class ArchivesSpaceService < Sinatra::Base
     json_response({"filename" => "#{ArchivalObject[params[:id]].component_id}_mods.xml".gsub(/\s+/, '_'), "mimetype" => "application/xml"})
   end
 
+  Endpoint.get('/repositories/:repo_id/resources/:id/repository')
+    .description("Get a Repository JSON representation of a Resource")
+    .params(["id", :id],
+            ["repo_id", :repo_id])
+    .permissions([:view_repository])
+    .returns([200, "OK"]) \
+  do
+    obj = resolve_references(Resource.to_jsonmodel(params[:id]), ['repository::agent_representation', 'linked_agents', 'subjects', 'digital_object'])
+    json = ASpaceExport.model(:repository).from_resource(JSONModel(:resource).new(obj))
+
+    json_response(ASpaceExport::serialize(json))
+  end
+
 end

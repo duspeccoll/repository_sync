@@ -28,6 +28,15 @@ class RepositoryModel < ASpaceExport::ExportModel
     :instances => :handle_instances
   }
 
+  @resource_map = {
+    :title => :title=,
+    :uri => :uri=,
+    [:id_0, :id_1, :id_2, :id_3] => :handle_resource_id,
+    :subjects => :handle_subjects,
+    :linked_agents => :handle_agents,
+    :notes => :handle_notes
+  }
+
   @name_type_map = {
     'agent_person' => 'personal',
     'agent_family' => 'family',
@@ -67,11 +76,20 @@ class RepositoryModel < ASpaceExport::ExportModel
     @dates = []
   end
 
-  # meaning, 'archival object' in the abstract
+  # map for archival_object data model
   def self.from_archival_object(obj)
 
     mods = self.new
     mods.apply_map(obj, @archival_object_map)
+
+    mods
+  end
+
+  # map for resource data model
+  def self.from_resource(obj)
+
+    mods = self.new
+    mods.apply_map(obj, @resource_map)
 
     mods
   end
@@ -97,6 +115,12 @@ class RepositoryModel < ASpaceExport::ExportModel
     end
 
     self.title = t
+  end
+
+
+  def handle_resource_id(*ids)
+    ids.reject!{|i| i.nil? || i.empty?}
+    self.local_identifier = ids.join('.')
   end
 
 
