@@ -66,6 +66,7 @@ class RepositorySerializer < ASpaceExport::Serializer
 
     record['parts'] = []
     mods.parts.each {|part| record['parts'].push part} unless mods.parts.empty?
+    mods.parts.length > 1 ? record['is_compound'] = true : record['is_compound'] = false
 
     record
   end
