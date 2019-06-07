@@ -7,7 +7,8 @@ class RepositorySerializer < ASpaceExport::Serializer
     record = {
       'title' => mods.title,
       'uri' => mods.uri,
-      'identifiers' => [{'type': "local", 'identifier': mods.local_identifier}]
+      'identifiers' => [{'type': "local", 'identifier': mods.local_identifier}],
+      'resource_type' => mods.type_of_resource.gsub('_', ' ')
     }
 
     unless mods.language_term.nil?

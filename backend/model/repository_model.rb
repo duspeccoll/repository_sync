@@ -13,6 +13,7 @@ class RepositoryModel < ASpaceExport::ExportModel
   attr_accessor :subjects
   attr_accessor :names
   attr_accessor :dates
+  attr_accessor :type_of_resource
   attr_accessor :parts
 
   @archival_object_map = {
@@ -196,6 +197,8 @@ class RepositoryModel < ASpaceExport::ExportModel
     instances.each do |instance|
       if instance['instance_type'] == "digital_object" && instance['is_representative'] == true
         object = instance['digital_object']['_resolved']
+        self.type_of_resource = object['digital_object_type'] unless object['digital_object_type'].nil?
+
         object['file_versions'].each_with_index do |part, i|
           self.parts << {
             'type' => self.class.mime_type_map[part['file_format_name']],
@@ -215,12 +218,13 @@ class RepositoryModel < ASpaceExport::ExportModel
       name = {
         'title' => agent['title'],
         'source' => agent['display_name']['source'],
-        'type' => link['jsonmodel_type']
       }
       name['authority_id'] = agent['display_name']['authority_id'] if agent['display_name']['authority_id']
       if link['role'] == "subject"
         self.subjects << name
       else
+        name['role'] = link['role']
+        name['relator'] = I18n.t("enumerations.linked_agent_archival_record_relators." + link['relator']) unless link['relator'].nil?
         self.names << name
       end
     end
