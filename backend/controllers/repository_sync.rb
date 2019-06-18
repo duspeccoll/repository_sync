@@ -7,7 +7,7 @@ class ArchivesSpaceService < Sinatra::Base
     .permissions([:view_repository])
     .returns([200, "OK"]) \
   do
-    obj = resolve_references(ArchivalObject.to_jsonmodel(params[:id]), ['linked_agents', 'subjects', 'digital_object'])
+    obj = resolve_references(ArchivalObject.to_jsonmodel(params[:id]), ['linked_agents', 'subjects', 'digital_object', 'digital_object::tree'])
     json = ASpaceExport.model(:repository).from_archival_object(JSONModel(:archival_object).new(obj))
 
     json_response(ASpaceExport::serialize(json))
@@ -20,7 +20,7 @@ class ArchivesSpaceService < Sinatra::Base
     .permissions([:view_repository])
     .returns([200, "OK"]) \
   do
-    obj = resolve_references(ArchivalObject.to_jsonmodel(params[:id]), ['linked_agents', 'subjects', 'digital_object'])
+    obj = resolve_references(ArchivalObject.to_jsonmodel(params[:id]), ['linked_agents', 'subjects', 'digital_object', 'digital_object::tree'])
     mods = ASpaceExport.model(:repository_mods).from_archival_object(JSONModel(:archival_object).new(obj))
 
     xml_response(ASpaceExport::serialize(mods))
