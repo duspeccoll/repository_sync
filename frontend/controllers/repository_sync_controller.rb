@@ -8,8 +8,13 @@ class RepositorySyncController < ApplicationController
   end
 
   def search
-    params['ref'] = params['item']['ref'] if params['ref'].nil?
-    @results = do_search(params)
+    if params['item'].nil?
+      flash[:error] = "No item selected"
+      redirect_to :action => :index
+    else
+      params['ref'] = params['item']['ref'] if params['ref'].nil?
+      @results = do_search(params)
+    end
   end
 
   def download
