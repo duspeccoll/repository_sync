@@ -197,15 +197,26 @@ class RepositoryModel < ASpaceExport::ExportModel
     instances.each do |instance|
       if instance['instance_type'] == "digital_object" && instance['is_representative'] == true
         object = instance['digital_object']['_resolved']
+        tree = object['tree']['_resolved']
         self.type_of_resource = object['digital_object_type'] unless object['digital_object_type'].nil?
 
-        object['file_versions'].each_with_index do |part, i|
-          self.parts << {
-            'type' => self.class.mime_type_map[part['file_format_name']],
+        # we should only be going one level deep in the digital object component tree
+        tree['children'].each_with_index do |child, i|
+          part = {
             'order' => (i+1).to_s,
-            'title' => part['file_uri'],
-            'caption' => part['caption']
+            'title' => child['title']
           }
+
+          component = DigitalObjectComponent.to_jsonmodel(child['id'])
+          part['entry_id'] = component['component_id'] if component.has_key?('component_id')
+
+          unless child['file_versions'].nil? || child['file_versions'].empty?
+            file = child['file_versions'].first
+            part['type'] = file['file_format_name']
+            part['caption'] = file['caption']
+          end
+
+          self.parts << part
         end
       end
     end
