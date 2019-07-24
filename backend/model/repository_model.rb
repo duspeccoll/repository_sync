@@ -208,7 +208,7 @@ class RepositoryModel < ASpaceExport::ExportModel
           }
 
           component = DigitalObjectComponent.to_jsonmodel(child['id'])
-          part['entry_id'] = component['component_id'] if component.has_key?('component_id')
+          part['kaltura_id'] = component['component_id'] if component.has_key?('component_id')
 
           unless child['file_versions'].nil? || child['file_versions'].empty?
             file = child['file_versions'].first
