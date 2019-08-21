@@ -34,3 +34,8 @@ More information:
 
 * [Mappings for Digital Repository JSON Objects](repository_model.md)
 * [Mappings for MODS XML](repository_mods_model.md)
+
+## References
+
+[EAD3 Tag Library](https://www.loc.gov/ead/EAD3taglib/EAD3.html)
+[MODS](http://www.loc.gov/standards/mods)
