@@ -1,6 +1,6 @@
 # Mappings for Digital Repository JSON Objects
 
-The repository JSON export is defined in `backend/model`. [repository_model.rb](backend/model/repository_model.rb) defines the metadata conversion from the ArchivesSpace data model to the MODS data model, and [repository_exporter.rb](backend/model/repository_exporter.rb) serializes the resulting object as MODS XML.
+The repository JSON export is defined in `backend/model`. [repository_model.rb](../backend/model/repository_model.rb) defines the metadata conversion from the ArchivesSpace data model to the MODS data model, and [repository_exporter.rb](../backend/model/repository_exporter.rb) serializes the resulting object as MODS XML.
 
 ## Title
 
