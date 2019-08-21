@@ -33,3 +33,4 @@ The Repository/ArchivesSpace integration serializes metadata about digital objec
 More information:
 
 * [Mappings for Digital Repository JSON Objects](repository_model.md)
+* [Mappings for MODS XML](repository_mods_model.md)
