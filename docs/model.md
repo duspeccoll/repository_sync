@@ -18,6 +18,18 @@ In the University of Denver implementation of ArchivesSpace, the three PCDM data
 
 * **Files** are represented as Digital Object Components. Each Digital Object in ArchivesSpace consists of one or more Component records, representing the file and its technical information. This technical information includes file formats, file size, and other uniquely identifying information about the file, such as a caption (for display in the Digital Repository) or a Kaltura unique identifier (for integration with audiovisual content in [DU MediaSpace](https://mediaspace.du.edu/)).
 
+## Model Definitions
+
+In the terms definitions below, references to the following ArchivesSpace data models are used:
+
+* **Archival Object:** The resource component record representing the digital material, where its descriptive metadata are recorded.
+* **Digital Object:** The digital object record representing the digital material, where its handle and resource type are recorded.
+* **Digital Object Component:** The file-level metadata representing the digital material's constituent files, represented in ArchivesSpace as children of the Digital Object representing the Archival Object.
+
 ## Metadata Specifications
 
 The Repository/ArchivesSpace integration serializes metadata about digital objects in both proprietary JSON (that is, JSON that is indexed directly by Elasticsearch and that is unique to the Archives @ DU Catalog) and in [MODS XML](http://www.loc.gov/standards/mods). While the former allows for direct integration of ArchivesSpace metadata with the repository, the latter allows for standards compliance and for ease of migration to another repository application, should the need arise.
+
+More information:
+
+* [Mappings for Digital Repository JSON Objects](repository_model.md)
