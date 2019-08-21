@@ -62,6 +62,20 @@ The date on which the resource was digitized, if originally realized in analog f
 **Repository:** `date.label = 'digitization'`  
 **ArchivesSpace:** Archival Object: Dates (with "Digitization" label)
 
+### Copyright Date
+
+The date on which copyright over the resource went into effect.
+
+**Repository:** `date.label = 'copyright'`  
+**ArchivesSpace:** Archival Object: Dates (with "Copyright" label)
+
+### Date Modified
+
+The date on which the resource was modified in some way.
+
+**Repository:** `date.label = 'modified'`  
+**ArchivesSpace:** Archival Object: Dates (with "Modified" label)
+
 ### Date Issued
 
 The date on which the resource was published or otherwise made available publicly, if later than or different from the creation date.
@@ -77,6 +91,12 @@ Extents in the repository are constructed from the metadata provided in Archives
 
 **Repository:** `extents`  
 **ArchivesSpace:** Archival Object: Extent
+
+## Extent Notes
+
+The MODS export handles two note types -- Physical Characteristics and Technical Requirements (`phystech`) and Dimensions (`dimensions`) -- differently from the note types described below in the Notes section of this documentation. Because this information may be found in the Extent sub-record form of the item record instead of/in addition to in the Notes section of the item record, the exporter models these fields into an `extent_notes` object, which is then serialized as a `<note>` element in the resulting MODS XML document representing the item.
+
+Details about these notes may be found below.
 
 ## Subjects
 
@@ -120,6 +140,47 @@ The URI for the subject heading, if drawn from a controlled vocabulary (indicate
 
 **Repository:** `subject.authority_id`  
 **ArchivesSpace:** Subject: Authority ID
+
+## Names
+
+Entities responsible for the creation or management of the resource, or who are topically covered by the resource. Named entities are managed in ArchivesSpace through the Agents data model, which is further subdivided into Person, Corporate Entity, and Family data models. They are then referenced by the resource's item record.
+
+In ArchivesSpace items, linked agents may have a role of "Creator," "Source," or "Subject." Creator agents may be further identified through [MARC Relator Terms](https://www.loc.gov/marc/relators), such as "photographer" or "interviewee," to identify the specific role they played in the creation or management of the resource.
+
+When the linked agent has a role of "subject," it is serialized with the other subjects using the MODS `name/namePart` convention. Otherwise it is serialized on its own.
+
+**Repository:** `names`  
+**ArchivesSpace:** Archival Object: Linked Agents
+
+Additional data properties used for named entities are documented below.
+
+### Role
+
+The role played by the linked named entity in the creation or lifecycle of the resource. (Not provided if the role is Subject.)
+
+**Repository:** `name.role`  
+**ArchivesSpace:** Archival Object: Linked Agents: Role
+
+### Relator
+
+The more specific role played by the linked named entity in the creation or lifecycle of the resource.
+
+**Repository:** `name.relator`  
+**ArchivesSpace:** Archival Object: Linked Agents: Relator
+
+### Authority
+
+The source of the name for the linked entity. May be local, or derived from an existing vocabulary such as the Library of Congress Name Authority File or the Virtual International Authority File.
+
+**Repository:** `name.source`  
+**ArchivesSpace:** Agent: Name: Source
+
+### Authority ID
+
+The Uniform Resource Identifier (URI) assigned to the named entity in the context of its authority source.
+
+**Repository:** `name.authority_id`  
+**ArchivesSpace:** Agent: Name: Authority ID
 
 ## Notes
 
@@ -167,6 +228,13 @@ Historical provenance information preceding the immediate purchase or transfer i
 **Repository:** `note.label = 'acqinfo'`  
 **ArchivesSpace:** Archival Object: Note (with "acqinfo" type)
 
+### Custodial History
+
+Historical provenance information regarding the resource; how its ownership and custody changed over time, leading up to its transfer to Special Collections and Archives. Immediate purchase, gift, or donation information is covered by the Immediate Source of Acquisition note.
+
+**MODS XML:** `note.label = 'custodhist'`  
+**ArchivesSpace:** Archival Object: Note (with "custodhist" type)
+
 ### Preferred Citation
 
 Information regarding how users should identify the resource when referring to it in published credits.
@@ -181,19 +249,33 @@ Information about materials that are not physically or logically included in the
 **Repository:** `note.label = 'relatedmaterial'`  
 **ArchivesSpace:** Archival Object: Note (with "relatedmaterial" type)
 
+### Conditions Governing Access
+
+Conditions that affect the availability of the materials being described.
+
+**MODS XML:** `note.label = 'accessrestrict'`  
+**ArchivesSpace:** Archival Object: Note (with "accessrestrict" type)
+
+### Conditions Governing Use
+
+Conditions that affect the use of the described materials, such as in publications.
+
+**MODS XML:** `note.label= 'userestrict'`  
+**ArchivesSpace:** Archival Object: Note (with "userestrict" type)
+
+### Legal Status
+
+The statutorily defined status of the materials being described.
+
+**MODS XML:** `note.label = 'legalStatus'`  
+**ArchivesSpace:** Archival Object: Note (with "legalstatus" type)
+
 ### General
 
 Any type of note not covered by the types described above.
 
 **Repository:** `note.label = 'odd'`  
 **ArchivesSpace:** Archival Object: Note (with "odd" type)
-
-## Names
-
-Entities responsible for the creation or management of the resource, or who are topically covered by the resource.
-
-**Repository:** `names`  
-**ArchivesSpace:** Archival Object: Linked Agents
 
 ## Parts
 
@@ -205,6 +287,13 @@ The order in which the file should be displayed in the compound object viewer. I
 
 **Repository:** `part.order`  
 **ArchivesSpace:** Digital Object Component (order of display)
+
+### File Format
+
+The file format of the Digital Object Component. Generated by the digital object creation Python script using libmagic.
+
+**Repository:** `part.type`  
+**ArchivesSpace:** Digital Object Component: File Version: File Format Name
 
 ### Title
 
@@ -219,13 +308,6 @@ The identifier from the [Kaltura audiovisual management system](https://mediaspa
 
 **Repository:** `part.kaltura_id`  
 **ArchivesSpace:** Digital Object Component: Component ID
-
-### File Format
-
-The file format of the Digital Object Component. Generated by the digital object creation Python script using libmagic.
-
-**Repository:** `part.type`  
-**ArchivesSpace:** Digital Object Component: File Version: File Format Name
 
 ### Caption
 

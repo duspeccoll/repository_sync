@@ -194,6 +194,13 @@ The role played by the linked named entity in the creation or lifecycle of the r
 The source of the name for the linked entity. May be local, or derived from an existing vocabulary such as the Library of Congress Name Authority File or the Virtual International Authority File.
 
 **MODS XML:** `name[@authority]`  
+**ArchivesSpace:** Agent: Name: Source
+
+### Authority ID
+
+The Uniform Resource Identifier (URI) assigned to the named entity in the context of its authority source.
+
+**MODS XML:** `name[@authorityURI]`  
 **ArchivesSpace:** Agent: Name: Authority ID
 
 ## Notes
