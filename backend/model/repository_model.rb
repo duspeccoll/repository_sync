@@ -212,7 +212,7 @@ class RepositoryModel < ASpaceExport::ExportModel
 
           unless child['file_versions'].nil? || child['file_versions'].empty?
             file = child['file_versions'].first
-            part['type'] = file['file_format_name']
+            part['type'] = self.class.mime_type_map[file['file_format_name']]
             part['caption'] = file['caption']
           end
 
